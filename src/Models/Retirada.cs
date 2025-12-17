@@ -1,5 +1,5 @@
 using System;
-
+namespace Models;
 public class Retirada
 {
     public double Valor {get; set;}

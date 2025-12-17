@@ -1,3 +1,6 @@
+using Models;
+
+namespace Controller;
 public class Estacionamento
 {
     public List<Veiculo> Veiculos {get;set;} //Lista de veículos meramente representativa
@@ -47,8 +50,9 @@ public class Estacionamento
         Console.WriteLine($"Veículo {v.Placa}, cadastrado com sucesso!");
     }
 
-    public void RetirarVeiculo(Entrada entrada, DateTime dataRetirada)
+    public void RetirarVeiculo(string placa, DateTime dataRetirada)
     {
+        Entrada entrada = BuscarEntradaPorPlaca(placa);
         List<Veiculo> veiculos = BuscarVeiculoPorPlaca(entrada.Placa);
         if(veiculos.Count == 1)
         {
@@ -70,4 +74,14 @@ public class Estacionamento
         }
     }
 
+    private Entrada BuscarEntradaPorPlaca(string placa)
+    {
+        List<Entrada> entrada = Entradas.FindAll(
+            delegate(Entrada e)
+            {
+                return e.Placa == placa;
+            }
+        );
+        return entrada.ElementAt(0) ?? throw new Exception("Entrada não encontrada");
+    }
 }

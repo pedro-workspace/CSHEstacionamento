@@ -1,3 +1,4 @@
+namespace Models;
 public class Entrada
 {
     public string Placa {get; set;}
