@@ -11,8 +11,9 @@ while (true)
     Console.WriteLine("Digite uma opção numérica conforme abaixo");
     Console.WriteLine("1 - Cadastrar veículo");
     Console.WriteLine("2 - Retirar veículo");
-    Console.WriteLine("3 - Listar veículos");
-    Console.WriteLine("4 - Encerrar consulta");
+    Console.WriteLine("3 - Listar veículos estacionados");
+    Console.WriteLine("4 - Listar veículos retirados");
+    Console.WriteLine("5 - Encerrar atendimento");
     escolha = int.Parse(Console.ReadLine());
     switch (escolha)
     {
@@ -49,15 +50,29 @@ while (true)
             estacionamento.RetirarVeiculo(placa, data);
             break;
         case 3:
-            estacionamento.Veiculos.ForEach( v =>
+            Console.WriteLine("Lista de veículos");
+            foreach(Veiculo veic in estacionamento.Veiculos)
             {
                 Console.WriteLine("---");
                 Console.WriteLine("Veículo");
-                Console.WriteLine($"Placa: {v.Placa}");
+                Console.WriteLine($"Placa: {veic.Placa}");
                 Console.WriteLine("---");
-            });
+            }
             break;
         case 4:
+            Console.WriteLine("Exibindo lista de veículos retirados");
+            estacionamento.ListaDeRetiradas().ForEach(
+                r =>
+                {
+                    Console.WriteLine("---");
+                    Console.WriteLine($"Veículo: {r.Placa}");
+                    Console.WriteLine($"Preço: {r.Valor}");
+                    Console.WriteLine($"Data: {r.Data}");
+                    Console.WriteLine("---");
+                }
+            );
+            break;
+        case 5:
             Console.WriteLine("Encerrando aplicação");
             fim = 1;
             break;

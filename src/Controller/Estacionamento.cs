@@ -7,6 +7,13 @@ public class Estacionamento
     List<Retirada> Retiradas {get;set;}
     List<Entrada> Entradas {get;set;}
 
+    public Estacionamento()
+    {
+        Veiculos = new List<Veiculo>{};
+        Retiradas = new List<Retirada>{};
+        Entradas = new List<Entrada>{};
+    }
+
     private List<Veiculo> BuscarVeiculoPorPlaca(string placa)
     {
         List<Veiculo> encontrados = Veiculos.FindAll(
@@ -40,13 +47,13 @@ public class Estacionamento
 
     public void CadastrarVeiculo(Veiculo v, DateTime data)
     {
-        Veiculos.Append(v);
+        Veiculos.Add(v);
         Entrada entrada = new Entrada
         {
             Placa = v.Placa,
             Data = data
         };
-        Entradas.Append(entrada);
+        Entradas.Add(entrada);
         Console.WriteLine($"Veículo {v.Placa}, cadastrado com sucesso!");
     }
 
@@ -63,8 +70,12 @@ public class Estacionamento
                 Placa = entrada.Placa,
                 Data = dataRetirada
                 };
+            //Exibindo preço final
+            Console.WriteLine("---");
+            Console.WriteLine($"R${retirada.Valor} à pagar");
+            Console.WriteLine("---");
             //Entrada a ser removida
-            Retiradas.Append(retirada);
+            Retiradas.Add(retirada);
             Entradas.Remove(entrada);
             Veiculos.Remove(veiculos.ElementAt(0));
         }
@@ -82,6 +93,17 @@ public class Estacionamento
                 return e.Placa == placa;
             }
         );
-        return entrada.ElementAt(0) ?? throw new Exception("Entrada não encontrada");
+        if(entrada.Count > 0)
+        {
+            return entrada.ElementAt(0);
+        } else {
+            throw new Exception("Entrada não encontrada");
+        }
+    }
+
+    public List<Retirada> ListaDeRetiradas()
+    {
+        List<Retirada> retiradas = Retiradas;
+        return retiradas;
     }
 }
